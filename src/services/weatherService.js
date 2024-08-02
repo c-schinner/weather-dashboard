@@ -4,15 +4,26 @@ const API_KEY = 'f55fd02dd0c725c7742bda4698aa4dd8';
 const BASE_URL = 'https://api.openweathermap.org/data/2.5/';
 
 
-// There is an issue with this function thats causing an error.
-// when i click the top buttons, the "lat" and "lon" properties are undefined. Not sure why.
 const getWeatherData = async (infoType, searchParams) => {
     const url = new URL(BASE_URL + infoType);
-    url.search = new URLSearchParams({ ...searchParams, appid: API_KEY });
+    const newSearchParams = {units: searchParams.units, q: searchParams.location};
+    console.log(newSearchParams);
+    url.search = new URLSearchParams({ ...newSearchParams, appid: API_KEY });
 
     const res = await fetch(url);
     return await res.json();
 };
+
+const getWeatherForecast = async (searchParams) => {
+    const url = new URL(BASE_URL + 'forecast');
+    const newSearchParams = {units: searchParams.units, lat: searchParams.lat, lon: searchParams.lon};
+    console.log(newSearchParams);
+    url.search = new URLSearchParams({ ...newSearchParams, appid: API_KEY });
+
+    const res = await fetch(url);
+    return await res.json();
+};
+
 
 const iconUrlFromCode = (icon) => `http://openweathermap.org/img/wn/${icon}@2x.png`;
 
@@ -91,7 +102,7 @@ const getFormattedWeatherData = async (searchParams) => {
 
         const { dt, lat, lon, timezone } = formattedCurrentWeather;
 
-        const formattedForecastWeather = await getWeatherData('forecast', { lat, lon, units: searchParams.units })
+        const formattedForecastWeather = await getWeatherForecast({ lat, lon, units: searchParams.units })
             .then((d) => formatForecastWeather(dt, timezone, d.list));
 
         return { ...formattedCurrentWeather, ...formattedForecastWeather };

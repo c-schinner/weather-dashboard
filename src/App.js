@@ -1,4 +1,3 @@
-
 import './App.css';
 import TopButtons from './components/TopButtons';
 import Inputs from './components/Inputs';
@@ -13,27 +12,32 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
-  const [query, setQuery] = useState({q:'san diego'});
+  const [location, setLocation] = useState('san diego');
   const [units, setUnits] = useState('metric');
   const [weather, setWeather] = useState(null);
 
   const getWeather = async () => {
 
-    const message = query.q ? query.q : 'current location';
-    toast.info(`Fetching weather data for ${message.toUpperCase()}`);
+    const message = location ? location : 'current location';
+    toast.info(`Fetching weather data for ${message}`);
 
-    await getFormattedWeatherData({ ...query, units }).then((data) => {
+    await getFormattedWeatherData({ location, units }).then((data) => {
 
-      toast.success(`Data fetch Successful for ${data.name}, ${data.country}`);
+      toast.success(`Data fetch Successful for ${data.name}`);
 
       setWeather(data)
     });
   };
 
-  // says react hook is missing a dependency??
-  useEffect(() => { 
+
+  useEffect(() => {
+    if (location === 'undefined') {
+      return;
+    }
     getWeather(); 
-  }, [query, units]);
+  }, [location, units]);
+
+
 
 
   const formatBackground = () => {
@@ -46,8 +50,8 @@ function App() {
   return (
     <div className={`mx-auto max-w-screen-md md-4 py-5 px-32 
     bg-gradient-to-br h-fit shadow-xl shadow-gray-400 ${formatBackground()}`}>
-      <TopButtons setQuery={setQuery} />
-      <Inputs setQuery={setQuery} setUnits={setUnits} />
+      <TopButtons setLocation={setLocation} />
+      <Inputs setLocation={setLocation} setUnits={setUnits} />
 
       
       {weather && (
