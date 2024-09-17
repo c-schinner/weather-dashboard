@@ -30,18 +30,18 @@ function TopButtons({ setLocation }) {
     },
 ]
 
-  return <div className="flex items-center justify-around my-6">
-    {cities.map((city) => (
+    return <div className="hidden sm:flex items-center justify-center space-x-4 sm:space-x-6 my-4 mx-2 sm:mx-6">
+        {cities.map((city) => (
 
-        <button 
-        key={city.id} 
-        className="text-white text-lg font-medium transition ease-in hover:scale-75"
-        onClick={() => setLocation(city.title)}>
-        {city.title}
-        </button>
+            <button 
+            key={city.id} 
+            className="text-white text-sm sm:text-lg font-medium m-2 py-1 px-3 transition ease-in hover:scale-105"
+            onClick={() => setLocation(city.title)}>
+            {city.title}
+            </button>
 
-    ))}
-  </div>
+        ))}
+    </div>
 }
 
 export default TopButtons

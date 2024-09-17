@@ -69,23 +69,23 @@ const TemeratureAndDetails = ({
   ];
 
   return (
-    <div>
+    <div className="space-y-1 sm:space-y-6">
 
-        <div className="flex items-center justify-center py-6 text-xl text-cyan-300">
+        <div className="flex items-center justify-center text-lg sm:text-xl text-cyan-300">
             <p>{details}</p>
         </div>
 
-        <div className="flex flex-row items-center justify-between text-white py-3">
+        <div className="flex flex-col sm:flex-row items-center justify-between text-white space-y-1 sm:space-y-0">
             <img src={icon} 
             alt="Weather Icon" 
-            className="w-20"/>
-            <p className="text-5xl">{`${temp.toFixed()}°`}</p>
+            className="w-16 sm:w-20"/>
+            <p className="text-4xl sm:text-5xl">{`${temp.toFixed()}°`}</p>
 
-          <div className="flex flex-col space-y-3 items-start">
+          <div className="flex flex-col space-y-2 items-start">
             {
               verticalDetails.map(({ id, Icon, title, value }) => (
-                <div key={id} className="flex font-light text-sm items-center justify-center">
-                  <Icon size={18} className="mr-1"/>
+                <div key={id} className="hidden sm:flex font-light text-sm sm:text-base items-center justify-start">
+                  <Icon size={16} className="mr-1" />
                   {`${title}: `}
                   <span className="font-medium ml-1">{value}</span>
                 </div>
@@ -94,14 +94,14 @@ const TemeratureAndDetails = ({
           </div>     
         </div>
 
-    <div className="flex flex-row items-center justify-center space-x-2 text-white text-sm py-3">
-      <div className="flex flex-row items-center justify-center space-x-10 text-sm py-3">
+    <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-10 text-white text-sm py-3">
+      <div className="hidden sm:flex flex-row items-center space-x-2">
 
               {
                 horizontalDetails.map(({ id, Icon, title, value }) => (
-                  <div key={id} className="flex flex-row items-center">
+                  <div key={id} className="flex flex-row items-center space-x-2">
                     <Icon size={30} />
-                    <p className="font-light ml-1">
+                    <p className="font-light">
                       {`${title}: `}
                     <span className="font-medium ml-1">{value}</span>
                     </p>

@@ -31,9 +31,7 @@ function App() {
 
 
   useEffect(() => {
-    if (location === 'undefined') {
-      return;
-    }
+    if (!location) return;
     getWeather(); 
   }, [location, units]);
 
@@ -43,12 +41,13 @@ function App() {
   const formatBackground = () => {
     if (!weather) return 'from-cyan-700 to-blue-700';
     const threshold = units === 'metric' ? 20 : 60; 
-    if (weather.temp <= threshold) return 'from-cyan-700 to-blue-700';
-    return 'from-yellow-600 to-orange-700';
+    return weather.temp <= threshold
+      ? 'from-cyan-700 to-blue-700'
+      : 'from-yellow-600 to-orange-700';
   }
 
   return (
-    <div className={`mx-auto max-w-screen-md md-4 py-5 px-32 
+    <div className={`mx-auto max-w-screen-md sm:mx-4 md:mx-6 lg:mx-8 py-5 px-4 sm:px-6 md:px-8 lg:px-12 
     bg-gradient-to-br h-fit shadow-xl shadow-gray-400 ${formatBackground()}`}>
       <TopButtons setLocation={setLocation} />
       <Inputs setLocation={setLocation} setUnits={setUnits} />
